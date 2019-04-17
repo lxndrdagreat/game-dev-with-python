@@ -40,5 +40,12 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 - http://www.sokobano.de/wiki/index.php?title=Level_format
 - http://www.sourcecode.se/sokoban/levels
 
+#### Further Ideas
+
+- Animation
+- Level Collection selection menu (perhaps with Tk?)
+- Level selection menu
+- Alert player when game is no longer winnable
+
 ## A Quick Intro to the Arcade Library
 
