@@ -162,6 +162,7 @@ class SokobanGame(arcade.Window):
         self._load_level_file('levels.txt')
 
         self.active_level = None
+        self.active_level_index = 0
         self.play_level(0)
 
         self.last_frame = 1
@@ -198,7 +199,8 @@ class SokobanGame(arcade.Window):
                 start = index
 
     def play_level(self, level_index: int):
-        level = self.levels[level_index]        
+        level = self.levels[level_index]
+        self.active_level_index = level_index
         self.active_level = SokobanLevel(level['name'], level['width'], level['height'], level['lines'])
 
     def on_draw(self):
@@ -261,6 +263,9 @@ class SokobanGame(arcade.Window):
         if key == arcade.key.ESCAPE:
             # kill the game
             arcade.close_window()
+        elif key == arcade.key.F2:
+            # restart current level
+            self.play_level(self.active_level_index)
 
         if key == arcade.key.LEFT:
             self._move_player(-1, 0)
