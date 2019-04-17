@@ -36,9 +36,9 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 
 ### Sokoban
 
-- https://en.wikipedia.org/wiki/Sokoban
-- http://www.sokobano.de/wiki/index.php?title=Level_format
-- http://www.sourcecode.se/sokoban/levels
+- [About Sokoban](https://en.wikipedia.org/wiki/Sokoban)
+- [Level format](http://www.sokobano.de/wiki/index.php?title=Level_format)
+- [Level packs](http://www.sourcecode.se/sokoban/levels)
 
 #### Further Ideas
 
@@ -46,6 +46,9 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 - Level Collection selection menu (perhaps with Tk?)
 - Level selection menu
 - Alert player when game is no longer winnable
+- Mouse-based controls
+- "Undo" last move feature
+- Show level collection name and level number in UI
 
 ## A Quick Intro to the Arcade Library
 

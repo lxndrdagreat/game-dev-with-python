@@ -22,7 +22,7 @@ TILE_DEFINITIONS = {
     '@': ('sokoban_tilesheet.png', 0, 11, TILE_TEXTURE_SIZE, TileType.FLOOR),
     # Goal, goal under box, goal under player
     '.': ('sokoban_tilesheet.png', 1, 11, TILE_TEXTURE_SIZE, TileType.GOAL),
-    '*': ('sokoban_tilesheet.png', 1, 11, TILE_TEXTURE_SIZE, TileType.FLOOR),
+    '*': ('sokoban_tilesheet.png', 1, 11, TILE_TEXTURE_SIZE, TileType.GOAL),
     '+': ('sokoban_tilesheet.png', 1, 11, TILE_TEXTURE_SIZE, TileType.GOAL)
 }
 

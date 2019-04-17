@@ -40,8 +40,8 @@ class SokobanLevel:
                     # create box
                     if c == '$' or c == '*':                        
                         box_sprite = Tile('sokoban_tilesheet.png', 0, 6, TILE_TEXTURE_SIZE)
-                        box_sprite.center_x = x * TILE_TEXTURE_SIZE
-                        box_sprite.center_y = (self._height - 1 - y) * TILE_TEXTURE_SIZE
+                        box_sprite.center_x = sprite.center_x
+                        box_sprite.center_y = sprite.center_y
                         self._boxes.append(box_sprite)
                         sprite.box_here = box_sprite
 
@@ -57,6 +57,16 @@ class SokobanLevel:
         self.player_sprite.center_x = self._player_start_position[0] * TILE_TEXTURE_SIZE
         self.player_sprite.center_y = (self._height - 1 - self._player_start_position[1]) * TILE_TEXTURE_SIZE
 
+    def screen_scale(self, screen_width: int, screen_height: int) -> float:
+        """ Returns the amount of scale needed to fit the entire level on the screen. """
+        w = self.width * TILE_TEXTURE_SIZE
+        h = self.height * TILE_TEXTURE_SIZE
+
+        w_scale = 1.0 if w < screen_width else round(w / screen_width, 2)
+        h_scale = 1.0 if h < screen_height else round(h / screen_height, 2)
+
+        return max(w_scale, h_scale)
+
     @property
     def width(self) -> int:
         return self._width
@@ -64,6 +74,16 @@ class SokobanLevel:
     @property
     def height(self) -> int:
         return self._height
+
+    @property
+    def center_x(self) -> int:
+        """ Returns the horizontal center of the level in pixels """
+        return int(float(self._width) * float(TILE_TEXTURE_SIZE) / 2.0)
+
+    @property
+    def center_y(self) -> int:
+        """ Returns the vertical center of the level in pixels """
+        return int(float(self._height) * float(TILE_TEXTURE_SIZE) / 2.0)
 
     @property
     def player_x(self) -> int:
@@ -137,3 +157,8 @@ class SokobanLevel:
                     box.center_y = new_tile.center_y
                     self.player_x = new_x
                     self.player_y = new_y
+
+    def check_win(self) -> bool:
+        """ To win, all goals must be covered with boxes """
+        goals = [t for t in self._grid if t[0] == TileType.GOAL and t[1].box_here == None]        
+        return len(goals) == 0

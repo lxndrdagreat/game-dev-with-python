@@ -19,6 +19,7 @@ class SokobanGame(arcade.Window):
 
         self.active_level = None
         self.active_level_index = 0
+        self.finished_level = False
         self.play_level(0)
 
         self.last_frame = 1
@@ -56,6 +57,7 @@ class SokobanGame(arcade.Window):
 
     def play_level(self, level_index: int):
         level = self.levels[level_index]
+        self.finished_level = False
         self.active_level_index = level_index
         self.active_level = SokobanLevel(level['name'], level['width'], level['height'], level['lines'])
 
@@ -65,24 +67,31 @@ class SokobanGame(arcade.Window):
 
         width, height = self.get_size()
 
-        # zoom out and center
-        scaled_width = int(width * 2)
-        scaled_height = int(height * 2)
+        # zoom out to fit entire level on screen
+        scale = self.active_level.screen_scale(width, height)
+        scaled_width = int(width * scale)
+        scaled_height = int(height * scale)        
 
-        center_x = int(self.active_level.width * TILE_TEXTURE_SIZE / 2)
-        center_y = int(self.active_level.height * TILE_TEXTURE_SIZE / 2)
+        # offset center to be over the middle of the level
+        center_x = self.active_level.center_x - TILE_TEXTURE_SIZE * 0.5
+        center_y = self.active_level.center_y - TILE_TEXTURE_SIZE        
 
         arcade.set_viewport(
-            -center_x,
-            -center_x + scaled_width,
-            -center_y,
-            -center_y + scaled_height
+            center_x - scaled_width / 2,
+            center_x + scaled_width / 2,
+            center_y - scaled_height / 2,
+            center_y + scaled_height / 2
         )
 
         self.active_level.draw()
 
         # reset viewport
         arcade.set_viewport(0, width, 0, height)
+
+        # if level is won, show message
+        if self.finished_level:
+            arcade.draw_text('COMPLETE!', width / 2, height / 2, arcade.color.YELLOW, 64, anchor_x='center')
+
         # draw framerate in bottom-left corner
         arcade.draw_text(f'FPS: {round(1.0 / self.last_frame, 1)}', 5, 5, arcade.color.RED, 12)
 
@@ -98,15 +107,28 @@ class SokobanGame(arcade.Window):
             # restart current level
             self.play_level(self.active_level_index)
 
-        if self.active_level:
+        elif self.active_level and not self.finished_level:
+            # handle movement and check for win
             if key == arcade.key.LEFT:
                 self.active_level.move_player(-1, 0)
+                self.finished_level = self.active_level.check_win()
             elif key == arcade.key.RIGHT:
                 self.active_level.move_player(1, 0)
+                self.finished_level = self.active_level.check_win()
             elif key == arcade.key.UP:
                 self.active_level.move_player(0, -1)
+                self.finished_level = self.active_level.check_win()
             elif key == arcade.key.DOWN:
                 self.active_level.move_player(0, 1)
+                self.finished_level = self.active_level.check_win()
+
+        elif self.active_level and self.finished_level and key == arcade.key.SPACE:
+            # advance to next level
+            next_level_index = self.active_level_index + 1
+            if next_level_index >= len(self.levels):
+                next_level_index = 0
+            self.play_level(next_level_index)
+
 
 
 if __name__ == '__main__':
