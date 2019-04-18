@@ -1,6 +1,48 @@
 import arcade
 from tile import TILE_DEFINITIONS, TILE_TEXTURE_SIZE, Tile, TileType
 from typing import List, Tuple
+from enum import Enum, auto
+
+
+class FacingDirection(Enum):
+    UP = auto()
+    DOWN = auto()
+    LEFT = auto()
+    RIGHT = auto()
+
+
+class PlayerSprite:
+    def __init__(self):
+        self.center_x: float = 0
+        self.center_y: float = 0
+        
+        filename = 'sokoban_tilesheet.png'
+        self.facing: FacingDirection = FacingDirection.DOWN
+
+        self._direction_sprites = {
+            FacingDirection.UP: arcade.Sprite(filename, scale=1, image_x=3*TILE_TEXTURE_SIZE, image_y=5*TILE_TEXTURE_SIZE, image_height=TILE_TEXTURE_SIZE, image_width=TILE_TEXTURE_SIZE),
+            FacingDirection.DOWN: arcade.Sprite(filename, scale=1, image_x=0*TILE_TEXTURE_SIZE, image_y=5*TILE_TEXTURE_SIZE, image_height=TILE_TEXTURE_SIZE, image_width=TILE_TEXTURE_SIZE),
+            FacingDirection.LEFT: arcade.Sprite(filename, scale=1, image_x=3*TILE_TEXTURE_SIZE, image_y=7*TILE_TEXTURE_SIZE, image_height=TILE_TEXTURE_SIZE, image_width=TILE_TEXTURE_SIZE),
+            FacingDirection.RIGHT: arcade.Sprite(filename, scale=1, image_x=0*TILE_TEXTURE_SIZE, image_y=7*TILE_TEXTURE_SIZE, image_height=TILE_TEXTURE_SIZE, image_width=TILE_TEXTURE_SIZE)
+        }
+
+        self._deltas_to_facing = {
+            (0, -1): FacingDirection.UP,
+            (0, 1): FacingDirection.DOWN,
+            (-1, 0): FacingDirection.LEFT,
+            (1, 0): FacingDirection.RIGHT
+        }
+
+    def draw(self):
+        sprite = self._direction_sprites[self.facing]
+        sprite.center_x = self.center_x
+        sprite.center_y = self.center_y
+        sprite.draw()
+
+    def set_facing_by_deltas(self, delta_x: int, delta_y: int):
+        d = (delta_x, delta_y)
+        if d in self._deltas_to_facing:
+            self.facing = self._deltas_to_facing[d]
 
 
 class SokobanLevel:
@@ -53,7 +95,7 @@ class SokobanLevel:
             y += 1
 
         # create player and set position
-        self.player_sprite: Tile = Tile('sokoban_tilesheet.png', 5, 7, TILE_TEXTURE_SIZE)
+        self.player_sprite: PlayerSprite = PlayerSprite()
         self.player_sprite.center_x = self._player_start_position[0] * TILE_TEXTURE_SIZE
         self.player_sprite.center_y = (self._height - 1 - self._player_start_position[1]) * TILE_TEXTURE_SIZE
 
@@ -134,6 +176,10 @@ class SokobanLevel:
         self.player_sprite.draw()
 
     def move_player(self, delta_x: int, delta_y: int):
+
+        # set facing whether or not the player actually moves
+        self.player_sprite.set_facing_by_deltas(delta_x, delta_y)
+
         new_x = self.player_x + delta_x
         new_y = self.player_y + delta_y
 
