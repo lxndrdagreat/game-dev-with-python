@@ -23,6 +23,7 @@ class SokobanGame(arcade.Window):
         self.play_level(0)
 
         self.last_frame = 1
+        self.show_fps = False
 
     def _parse_level(self, level_lines: List[str]) -> dict:
         width = max([len(line) for line in level_lines])
@@ -93,7 +94,8 @@ class SokobanGame(arcade.Window):
             arcade.draw_text('COMPLETE!', width / 2, height / 2, arcade.color.YELLOW, 64, anchor_x='center')
 
         # draw framerate in bottom-left corner
-        arcade.draw_text(f'FPS: {round(1.0 / self.last_frame, 1)}', 5, 5, arcade.color.RED, 12)
+        if self.show_fps:
+            arcade.draw_text(f'FPS: {round(1.0 / self.last_frame, 1)}', 5, 5, arcade.color.RED, 12)
 
     def on_update(self, delta):
         # used to determine FPS
@@ -106,6 +108,9 @@ class SokobanGame(arcade.Window):
         elif key == arcade.key.F2:
             # restart current level
             self.play_level(self.active_level_index)
+        elif key == arcade.key.F1:
+            # toggle FPS meter
+            self.show_fps = not self.show_fps
 
         elif self.active_level and not self.finished_level:
             # handle movement and check for win

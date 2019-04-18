@@ -49,6 +49,7 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 - Mouse-based controls
 - "Undo" last move feature
 - Show level collection name and level number in UI
+- Save completion information (best times, moves, etc.)
 
 ## A Quick Intro to the Arcade Library
 
