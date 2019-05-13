@@ -5,6 +5,7 @@ import random
 from enum import Enum, IntFlag
 import random
 import datetime
+import os
 
 
 class BoardSize(Enum):
@@ -53,10 +54,12 @@ class MinesweeperGame(arcade.Window):
         # set up the window with size and title
         super().__init__(500, 600, 'Minesweeper')
 
+        self.resource_path = os.path.dirname(os.path.abspath(__file__))
+
         # load and set the icon
         # using underlying Pyglet functionality
         # https://pyglet.readthedocs.io/en/pyglet-1.3-maintenance/programming_guide/windowing.html
-        icon = arcade.pyglet.image.load('icon64.png')
+        icon = arcade.pyglet.image.load(os.path.join(self.resource_path, 'icon64.png'))
         self.set_icon(icon)
 
         # set the background color
@@ -134,7 +137,7 @@ class MinesweeperGame(arcade.Window):
                 self.board[index] = cell
 
                 # sprite
-                button = arcade.Sprite('button.png')
+                button = arcade.Sprite(os.path.join(self.resource_path, 'button.png'))
                 button.scale = sprite_scale
                 button.center_x = start_x + cell_buffer + (cell_size * x + cell_size / 2)
                 button.center_y = start_y - cell_buffer - (cell_size * y + cell_size / 2)
@@ -202,7 +205,7 @@ class MinesweeperGame(arcade.Window):
         cell = cell | CellState.DISCOVERED
         self.board[start_y * self.difficulty.width + start_x] = cell
         old_sprite = self.board_sprites[start_y * self.difficulty.width + start_x]                    
-        sprite = arcade.Sprite('button_pressed.png')            
+        sprite = arcade.Sprite(os.path.join(self.resource_path, 'button_pressed.png'))
         sprite.scale = old_sprite.scale
         sprite.center_x = old_sprite.center_x
         sprite.center_y = old_sprite.center_y
@@ -235,9 +238,9 @@ class MinesweeperGame(arcade.Window):
             sprite: arcade.Sprite
             if CellState.IS_MINE in cell:            
                 self.is_game_over = True
-                sprite = arcade.Sprite('mine-explosion.png')
+                sprite = arcade.Sprite(os.path.join(self.resource_path, 'mine-explosion.png'))
             else:
-                sprite = arcade.Sprite('button_pressed.png')            
+                sprite = arcade.Sprite(os.path.join(self.resource_path, 'button_pressed.png'))
             sprite.scale = old_sprite.scale
             sprite.center_x = old_sprite.center_x
             sprite.center_y = old_sprite.center_y
@@ -254,11 +257,11 @@ class MinesweeperGame(arcade.Window):
             if CellState.MARKED in cell:
                 # unmark
                 cell = cell ^ CellState.MARKED
-                sprite = arcade.Sprite('button.png')
+                sprite = arcade.Sprite(os.path.join(self.resource_path, 'button.png'))
             else:
                 # mark
                 cell = cell | CellState.MARKED
-                sprite = arcade.Sprite('button_marked.png')
+                sprite = arcade.Sprite(os.path.join(self.resource_path, 'button_marked.png'))
             self.board[index] = cell
             sprite.scale = old_sprite.scale
             sprite.center_x = old_sprite.center_x
@@ -296,6 +299,5 @@ class MinesweeperGame(arcade.Window):
 
 
 if __name__ == '__main__':
-    random.seed(42)
     game = MinesweeperGame()
     arcade.run()
