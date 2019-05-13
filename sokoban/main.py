@@ -113,6 +113,9 @@ class SokobanGame(arcade.Window):
         elif key == arcade.key.F1:
             # toggle FPS meter
             self.show_fps = not self.show_fps
+        elif key == arcade.key.F3:
+            # skip level
+            self.play_level(self.active_level_index + 1)
 
         elif self.active_level and not self.finished_level:
             # handle movement and check for win
