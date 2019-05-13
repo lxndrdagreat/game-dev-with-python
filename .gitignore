@@ -187,3 +187,4 @@ $RECYCLE.BIN/
 .idea/
 
 Pipfile
+Pipfile.lock
