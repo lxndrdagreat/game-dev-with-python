@@ -3,6 +3,7 @@ from typing import List, Dict, Tuple
 from enum import IntEnum, auto
 from level import SokobanLevel
 from tile import TILE_TEXTURE_SIZE
+import os
 
 
 class SokobanGame(arcade.Window):
@@ -15,7 +16,8 @@ class SokobanGame(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK)
 
         self.levels = []
-        self._load_level_file('levels.txt')
+        self._resource_path = os.path.dirname(os.path.abspath(__file__))
+        self._load_level_file(os.path.join(self._resource_path, 'levels.txt'))
 
         self.active_level = None
         self.active_level_index = 0

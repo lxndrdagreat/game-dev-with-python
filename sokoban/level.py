@@ -2,6 +2,7 @@ import arcade
 from tile import TILE_DEFINITIONS, TILE_TEXTURE_SIZE, Tile, TileType
 from typing import List, Tuple
 from enum import Enum, auto
+import os
 
 
 class FacingDirection(Enum):
@@ -16,7 +17,7 @@ class PlayerSprite:
         self.center_x: float = 0
         self.center_y: float = 0
         
-        filename = 'sokoban_tilesheet.png'
+        filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sokoban_tilesheet.png')
         self.facing: FacingDirection = FacingDirection.DOWN
 
         self._direction_sprites = {
@@ -55,6 +56,8 @@ class SokobanLevel:
         self._tile_sprites: List[Tile] = []
         self._boxes: List[Tile] = []
 
+        self._resource_path = os.path.dirname(os.path.abspath(__file__))
+
         y = 0
         for line in level_lines:
             x = 0
@@ -71,7 +74,7 @@ class SokobanLevel:
                     first_wall = True
                 
                 if c in TILE_DEFINITIONS:
-                    sprite = Tile(*TILE_DEFINITIONS[c][:-1])
+                    sprite = Tile(self.resource_path(TILE_DEFINITIONS[c][0]), *TILE_DEFINITIONS[c][1:-1])
                     sprite.center_x = x * TILE_TEXTURE_SIZE
                     sprite.center_y = (self._height - 1 - y) * TILE_TEXTURE_SIZE
                     self._grid[index] = (
@@ -81,7 +84,7 @@ class SokobanLevel:
 
                     # create box
                     if c == '$' or c == '*':                        
-                        box_sprite = Tile('sokoban_tilesheet.png', 0, 6, TILE_TEXTURE_SIZE)
+                        box_sprite = Tile(self.resource_path('sokoban_tilesheet.png'), 0, 6, TILE_TEXTURE_SIZE)
                         box_sprite.center_x = sprite.center_x
                         box_sprite.center_y = sprite.center_y
                         self._boxes.append(box_sprite)
@@ -108,6 +111,9 @@ class SokobanLevel:
         h_scale = 1.0 if h < screen_height else round(h / screen_height, 2)
 
         return max(w_scale, h_scale)
+
+    def resource_path(self, filename: str) -> str:
+        return os.path.join(self._resource_path, filename)
 
     @property
     def width(self) -> int:
