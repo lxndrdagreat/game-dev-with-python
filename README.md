@@ -3,6 +3,9 @@
 This is information and example code written for a talk I did at
 the Greenville Python Meetup in May of 2019.
 
+[Google Presentation](https://docs.google.com/presentation/d/1rTE7dVM-Q9OxJkT1uTwN7Yr7UDV6ImvAkB11DylUKkk/edit?usp=sharing)
+for the talk.
+
 ## Arcade Examples
 
 These example games all use [Arcade](http://arcade.academy/) which can
