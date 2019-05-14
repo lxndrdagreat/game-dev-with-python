@@ -26,6 +26,9 @@ class AsteroidsGame(arcade.Window):
         # asteroids
         self.asteroids: List[Asteroid] = []
 
+        # pause state
+        self.is_paused = False
+
         # input states
         self.input = {
             arcade.key.LEFT: False,
@@ -74,6 +77,10 @@ class AsteroidsGame(arcade.Window):
     def on_update(self, delta):
         self.last_frame = delta
         screen_width, screen_height = self.get_size()
+
+        # if game is paused, we're done already
+        if self.is_paused:
+            return
 
         # only update the player ship if it is alive
         if self.player_ship.alive:
@@ -147,6 +154,9 @@ class AsteroidsGame(arcade.Window):
         if key == arcade.key.ESCAPE:
             # kill the game
             arcade.close_window()
+        elif key == arcade.key.F3:
+            # pause the game
+            self.is_paused = not self.is_paused
 
         # apply input
         if key in self.input:
