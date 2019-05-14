@@ -3,7 +3,10 @@
 This is information and example code written for a talk I did at
 the Greenville Python Meetup in May of 2019.
 
-## Examples
+## Arcade Examples
+
+These example games all use [Arcade](http://arcade.academy/) which can
+be installed via `pip install arcade`.
 
 ### Asteroids
 
@@ -51,5 +54,23 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 - Show level collection name and level number in UI
 - Save completion information (best times, moves, etc.)
 
-## A Quick Intro to the Arcade Library
+## Resource Links
 
+- [Py-SDL2](https://github.com/marcusva/py-sdl2)
+- [PySFML](https://github.com/Sonkun/python-sfml)
+- [PyGLFW](https://github.com/FlorianRhiem/pyGLFW)
+- [PyOpenGL](http://pyopengl.sourceforge.net/documentation/index.html)
+- [Kivy](https://kivy.org/)
+- [Kivent](https://github.com/kivy/kivent)
+- [PyGame](https://www.pygame.org/news)
+- [Pyglet](https://pyglet.readthedocs.io)
+- [Arcade](http://arcade.academy/)
+- [Arcade Book](https://arcade-book.readthedocs.io/en/latest/)
+- [Ren’Py](https://www.renpy.org/)
+- [Panda3D](https://www.panda3d.org/)
+- [Pyxel](https://github.com/kitao/pyxel)
+- [Python TCOD](https://github.com/libtcod/python-tcod)
+- [Cocos2D](http://python.cocos2d.org/)
+- [Open Game Art](https://opengameart.org/)
+- [Free art by Kenney](https://www.kenney.nl/)
+- [Free Game Icons](https://game-icons.net/)
