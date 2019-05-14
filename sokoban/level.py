@@ -14,6 +14,9 @@ class FacingDirection(Enum):
 
 class PlayerSprite:
     def __init__(self):
+        """ Represents the little mover man. Has a different
+            sprite for the different directions he can face.
+        """
         self.center_x: float = 0
         self.center_y: float = 0
         
@@ -35,12 +38,14 @@ class PlayerSprite:
         }
 
     def draw(self):
+        """ Draws the sprite for the direction the mover man is facing. """
         sprite = self._direction_sprites[self.facing]
         sprite.center_x = self.center_x
         sprite.center_y = self.center_y
         sprite.draw()
 
     def set_facing_by_deltas(self, delta_x: int, delta_y: int):
+        """ Sets which direction the mover man is facing, based on movement deltas. """
         d = (delta_x, delta_y)
         if d in self._deltas_to_facing:
             self.facing = self._deltas_to_facing[d]
@@ -48,12 +53,17 @@ class PlayerSprite:
 
 class SokobanLevel:
     def __init__(self, name: str, width: int, height: int, level_lines: List[str]):
+        """ Represents a single Sokoban level.
+            Creates the level based on the lines provided from the level file.
+        """
         self.name = name
         self._width: int = width
         self._height: int = height
         self._player_start_position: Tuple[int, int] = (0, 0)
+        # single-dimensional array of the map tile data
         self._grid: List[Tuple[TileType, Tile]] = [(TileType.EMPTY, None)] * (width * height)
         self._tile_sprites: List[Tile] = []
+        # keep track of the boxes
         self._boxes: List[Tile] = []
 
         self._resource_path = os.path.dirname(os.path.abspath(__file__))
