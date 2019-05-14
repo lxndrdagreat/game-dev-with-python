@@ -46,6 +46,9 @@ Shows mouse interaction, text drawing, and using sprites for drawing.
 - [Level format](http://www.sokobano.de/wiki/index.php?title=Level_format)
 - [Level packs](http://www.sourcecode.se/sokoban/levels)
 
+Arrow keys to move. `F2` to restart the current level. `F3` to skip
+to the next level.
+
 #### Further Ideas
 
 - Animation
