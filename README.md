@@ -11,11 +11,16 @@ for the talk.
 These example games all use [Arcade](http://arcade.academy/) which can
 be installed via `pip install arcade`.
 
+Each example has at least a few ideas of how someone (else, not me) could
+run with what's there and improve it.
+
 ### Asteroids
 
 A basic version of Asteroids, this game showcases some basics of the Arcade
 library like subclassing the `Window` class, keyboard input handling and
 drawing basic shapes.
+
+Left/Right Arrow keys to rotate. `Up` arrow to accelerate. `Space` to fire.
 
 #### Further Ideas
 
@@ -35,10 +40,14 @@ drawing basic shapes.
 
 Shows mouse interaction, text drawing, and using sprites for drawing.
 
+`Left Click` to check a square (watch out for mines!), `Right Click` to mark a
+square as "dangerous". `F2` will restart the game.
+
 #### Further Ideas
 
 - UI to select difficulty
 - Allow resizing the window
+- Recognize the player's achievement when he wins
 
 ### Sokoban
 
